@@ -6,6 +6,29 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/MyButton</item>
+    </style>
+
+    <!-- Button style -->
+    <style name="MyButton" parent="android:Widget.Material.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+    </style>
+
+    <!-- Title textView -->
+    <style name="TitleTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <!-- Clickable link textView -->
+    <style name="ClickableLinkTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 </resources>

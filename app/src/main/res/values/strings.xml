@@ -1,3 +1,42 @@
 <resources>
-    <string name="app_name">SixNez</string>
+    <string name="app_name">Amusées</string>
+
+    <string name="welcome">Bienvenue !</string>
+    <string name="register_title">Créer un compte</string>
+    <string name="login_title">Connexion</string>
+    <string name="enter">Entrer</string>
+
+    <string name="gender">Genre</string>
+    <string name="lastname">Nom</string>
+    <string name="firstname">Prénom</string>
+    <string name="birthday_date">Date de naissance</string>
+    <string name="adress">Adresse</string>
+    <string name="city">Ville</string>
+    <string name="country">Pays</string>
+    <string name="email">Email</string>
+    <string name="login">Nom de compte</string>
+    <string name="password">Mot de passe</string>
+
+    <string name="password_verif">Confirmation du mot de passe</string>
+    <string name="password_information">
+        Votre mot de passe doit remplir les conditions suivantes:\n
+        - Il doit contenir au moins 8 caractères\n
+        - Il doit contenir des minuscules\n
+        - Il doit contenir des majuscules\n
+        - Il doit contenir au moins un chiffre\n
+        - Il doit contenir un caractère spécial:\n
+            ~*$.|?!,;(){}/@%^#
+    </string>
+
+    <string name="login_button">Se connecter</string>
+    <string name="register_button">S\'enregistrer !</string>
+    <string name="next_button">Suivant</string>
+    <string name="previous_button">Précédent</string>
+    <string name="debug">Debug</string>
+    <string name="register_link"><u>Pas de compte ? Créez-en un !</u></string>
+
+    <string name="man">Homme</string>
+    <string name="woman">Femme</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
