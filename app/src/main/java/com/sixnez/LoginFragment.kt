@@ -43,9 +43,9 @@ class LoginFragment : Fragment() {
         //Login
         viewModel.navigateToNextFragment.observe(this, Observer { user ->
             user?.let {
-                this.findNavController().navigate(
-                    LoginFragmentDirections.actionLoginFragmentToNextFragment()
-                )
+                val activity = activity as MainActivity?
+                activity?.changeFragment(HomeFragment())
+
                 viewModel.doneNavigating()
             }
         })
@@ -55,9 +55,9 @@ class LoginFragment : Fragment() {
         viewModel.navigateToRegister.observe(this, Observer { bool ->
             bool?.let {
                 if (bool) {
-                    this.findNavController().navigate(
-                        LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
-                    )
+                    val activity = activity as MainActivity?
+                    activity?.changeFragment(RegisterFragment())
+
                     viewModel.doneNavigating()
                 }
             }

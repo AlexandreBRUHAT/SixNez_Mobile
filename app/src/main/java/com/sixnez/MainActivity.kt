@@ -8,8 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import android.widget.Toast
-
+import androidx.fragment.app.Fragment
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -41,18 +40,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onStart() {
+        changeFragment(HomeFragment())
+        super.onStart()
+    }
+
+    fun changeFragment(frag: Fragment) {
+        var fragment = frag
+        if (false) {
+            //TODO si aucun user n'est connecté on renvoie vers la connexion
+            fragment = HomeFragment()
+        }
+
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragment,
+            fragment
+        ).commit()
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.nav_home -> supportFragmentManager.beginTransaction().replace(
-                R.id.fragment,
-                LoginFragment()
-            ).commit()
+            R.id.nav_home -> changeFragment(HomeFragment())
 
-            R.id.nav_search -> supportFragmentManager.beginTransaction().replace(
-                R.id.fragment,
-                RegisterFragment()
-            ).commit()
+            R.id.nav_movies -> changeFragment(FilmsFragment())
+
+            R.id.nav_actors -> changeFragment(ActorsFragment())
+
+            R.id.nav_login -> changeFragment(LoginFragment())
+
+            R.id.nav_register -> changeFragment(RegisterFragment())
+
+            R.id.nav_profile -> changeFragment(ProfileFragment())
+
+            R.id.nav_about -> changeFragment(AboutFragment())
         }
 
         drawer.closeDrawer(GravityCompat.START)

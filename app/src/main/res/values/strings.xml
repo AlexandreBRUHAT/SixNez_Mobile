@@ -42,4 +42,22 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="home_title">Bienvenue sur SixNez !</string>
+    <string name="about_title">A propos</string>
+    <string name="about">Cette application a été conçue par des gens pour des gens. Cordialement la Direction</string>
+    <string name="films_title">Recherche de film</string>
+    <string name="actors_title">Recherche d\'acteur</string>
+    <string name="profile_title">Mon profil</string>
+
+    <string name="nav_home">Accueil</string>
+    <string name="nav_film">Rechercher un film</string>
+    <string name="nav_actor">Rechercher un acteur</string>
+    <string name="nav_account">Compte</string>
+    <string name="nav_login">Se connecter</string>
+    <string name="nav_register">Créer un compte</string>
+    <string name="nav_profile">Mon profil</string>
+    <string name="nav_logout">Se déconnecter</string>
+    <string name="nav_project">Le projet</string>
+    <string name="nav_about">A propos</string>
 </resources>

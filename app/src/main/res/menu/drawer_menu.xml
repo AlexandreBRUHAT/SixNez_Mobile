@@ -7,19 +7,44 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Accueil" />
+            android:title="@string/nav_home" />
 
-        <item android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search"
-            android:title="Rechercher un film" />
+        <item android:id="@+id/nav_movies"
+            android:icon="@drawable/ic_movie"
+            android:title="@string/nav_film" />
+
+        <item android:id="@+id/nav_actors"
+            android:icon="@drawable/ic_actor"
+            android:title="@string/nav_actor" />
     </group>
 
-    <!-- Trigger action on click and don't stay selected -->
-    <item android:title="Le projet">
+    <item android:title="@string/nav_account">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_login"
+                    android:title="@string/nav_login" />
+
+                <item android:id="@+id/nav_register"
+                    android:icon="@drawable/ic_register"
+                    android:title="@string/nav_register" />
+
+                <item android:id="@+id/nav_profile"
+                    android:icon="@drawable/ic_profile"
+                    android:title="@string/nav_profile" />
+            </group>
+
+            <item android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/nav_logout" />
+        </menu>
+    </item>
+
+    <item android:title="@string/nav_project">
         <menu>
             <item android:id="@+id/nav_about"
                 android:icon="@drawable/ic_info"
-                android:title="A propos" />
+                android:title="@string/nav_about" />
         </menu>
     </item>
 
