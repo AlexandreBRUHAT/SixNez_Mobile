@@ -5,14 +5,12 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sixnez.database.UserDAO
 import com.sixnez.model.User
 import kotlinx.coroutines.*
 import java.security.MessageDigest
 
 
 class RegisterViewModel(
-    val database: UserDAO,
     application: Application
 ) : AndroidViewModel(application)
 {
@@ -38,28 +36,25 @@ class RegisterViewModel(
     private suspend fun insert(user: User): Long {
         var id = 0L
         withContext(Dispatchers.IO) {
-            id = database.insert(user)
+            //request insert
         }
         return id
     }
 
     //end register
-    private val _navigateToLoginFragment = MutableLiveData<User>()
+    private val _navigateToLoginFragment = MutableLiveData<Boolean>()
 
-    val navigateToLoginFragment: LiveData<User>
+    val navigateToLoginFragment: LiveData<Boolean>
         get() = _navigateToLoginFragment
 
 
     fun onValidateAccount() {
-        Log.i("200","Click account")
+        _navigateToLoginFragment.value = true
+        /*
         uiScope.launch {
             val user = user.value ?: return@launch
 
             if(user.login.isNullOrEmpty()){
-                return@launch
-            }
-
-            if(!isLoginAvailable()) {
                 return@launch
             }
 
@@ -75,8 +70,9 @@ class RegisterViewModel(
 
             user.id = insert(user)
 
-            _navigateToLoginFragment.value = user
+            _navigateToLoginFragment.value = true
         }
+         */
     }
 
     fun encode(type:String, input: String): String {
@@ -95,16 +91,8 @@ class RegisterViewModel(
         return result.toString()
     }
 
-    private suspend fun isLoginAvailable(): Boolean {
-        val id = withContext(Dispatchers.IO) {
-            database.existsLogin(user.value?.login+"")
-        }
-
-        return id == 0L
-    }
-
     fun doneNavigating() {
-        _navigateToLoginFragment.value = null
+        _navigateToLoginFragment.value = false
     }
 
     override fun onCleared() {

@@ -5,14 +5,12 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sixnez.database.UserDAO
 import com.sixnez.model.User
 import kotlinx.coroutines.*
 import java.security.MessageDigest
 
 
 class LoginViewModel(
-    val database: UserDAO,
     application: Application,
     private val userID: Long = 0L // userID
 ) : AndroidViewModel(application)
@@ -82,7 +80,8 @@ class LoginViewModel(
     private suspend fun testLogin(): Long {
         var id = 0L
         withContext(Dispatchers.IO) {
-            id = database.testLogin(user.value?.login?:"",encode("SHA1",user.value?.password+""))
+//            id = database.testLogin(user.value?.login?:"",encode("SHA1",user.value?.password+""))
+            id = 2L
         }
         return id
     }

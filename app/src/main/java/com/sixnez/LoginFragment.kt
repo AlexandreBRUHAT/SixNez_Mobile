@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.sixnez.database.MyDatabase
 import com.sixnez.databinding.FragmentLoginBinding
 import com.sixnez.viewmodel.LoginViewModel
 import com.sixnez.viewmodelfactory.LoginViewModelFactory
@@ -29,8 +27,7 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val application = requireNotNull(this.activity).application
-        val dataSource = MyDatabase.getInstance(application).userDao
-        val viewModelFactory = LoginViewModelFactory(dataSource, application)
+        val viewModelFactory = LoginViewModelFactory(application)
 
         viewModel =
             ViewModelProviders.of(
