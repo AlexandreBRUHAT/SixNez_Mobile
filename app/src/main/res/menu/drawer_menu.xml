@@ -37,14 +37,17 @@
             <item android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="@string/nav_logout" />
+
         </menu>
     </item>
 
     <item android:title="@string/nav_project">
         <menu>
-            <item android:id="@+id/nav_about"
-                android:icon="@drawable/ic_info"
-                android:title="@string/nav_about" />
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/nav_about"
+                    android:icon="@drawable/ic_info"
+                    android:title="@string/nav_about" />
+            </group>
         </menu>
     </item>
 

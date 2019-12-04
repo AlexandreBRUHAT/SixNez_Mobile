@@ -13,22 +13,13 @@ import androidx.room.PrimaryKey
 @Keep
 @Entity(tableName = "user")
 class User(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    private var _id: Long,
 
+    @PrimaryKey
     @ColumnInfo(name = "login")
     private var _login: String? = "",
 
     @ColumnInfo(name = "password")
     private var _password: String? = ""): BaseObservable(), Parcelable {
-
-    var id: Long
-        @Bindable get() = _id
-        set(value) {
-            _id = value
-            notifyPropertyChanged(BR.id)
-        }
 
     var login: String?
         @Bindable get() = _login
@@ -45,13 +36,11 @@ class User(
         }
 
     constructor(parcel: Parcel) : this(
-        parcel.readLong(),
         parcel.readString(),
         parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeLong(_id)
         parcel.writeString(_login)
         parcel.writeString(_password)
     }

@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.sixnez.databinding.FragmentLoginBinding
 import com.sixnez.viewmodel.LoginViewModel
 import com.sixnez.viewmodelfactory.LoginViewModelFactory
@@ -41,12 +40,15 @@ class LoginFragment : Fragment() {
         }
 
         //Login
-        viewModel.navigateToNextFragment.observe(this, Observer { user ->
-            user?.let {
-                val activity = activity as MainActivity?
-                activity?.changeFragment(HomeFragment())
+        viewModel.navigateToNextFragment.observe(this, Observer { bool ->
+            bool?.let {
+                if (bool) {
+                    val activity = activity as MainActivity?
+                    activity?.connect(viewModel.user.value)
+                    activity?.changeFragment(HomeFragment(), R.id.nav_home)
 
-                viewModel.doneNavigating()
+                    viewModel.doneNavigating()
+                }
             }
         })
 
@@ -56,7 +58,7 @@ class LoginFragment : Fragment() {
             bool?.let {
                 if (bool) {
                     val activity = activity as MainActivity?
-                    activity?.changeFragment(RegisterFragment())
+                    activity?.changeFragment(RegisterFragment(), R.id.nav_register)
 
                     viewModel.doneNavigating()
                 }

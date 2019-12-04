@@ -48,7 +48,7 @@ class RegisterFragment : Fragment() {
             bool?.let {
                 if (bool) {
                     val activity = activity as MainActivity?
-                    activity?.changeFragment(LoginFragment())
+                    activity?.changeFragment(LoginFragment(), R.id.nav_login)
 
                     viewModel.doneNavigating()
                 }

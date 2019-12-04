@@ -27,15 +27,14 @@ class LoginViewModel(
     }
 
     //log me in
-    private val _navigateToNextFragment = MutableLiveData<User>()
+    private val _navigateToNextFragment = MutableLiveData<Boolean>()
 
-    val navigateToNextFragment: LiveData<User>
+    val navigateToNextFragment: LiveData<Boolean>
         get() = _navigateToNextFragment
 
 
     fun onValidateLogin() {
-        _navigateToNextFragment.value = User(1, "1","12")
-        /*
+
         uiScope.launch {
             var user = user.value ?: return@launch
 
@@ -46,19 +45,13 @@ class LoginViewModel(
             if(user.password.isNullOrEmpty()) {
                 return@launch
             }
-
-            val id = testLogin()
-            Log.i("ID",id.toString())
-            if (id > 0) {
-                _user.value?.id = id
-                _navigateToNextFragment.value = user
+            if (testLogin() != 0L) { // TODO
+                _navigateToNextFragment.value = true
             }
             else {
                 return@launch
             }
         }
-
-         */
     }
 
     //register
@@ -82,6 +75,7 @@ class LoginViewModel(
         withContext(Dispatchers.IO) {
 //            id = database.testLogin(user.value?.login?:"",encode("SHA1",user.value?.password+""))
             id = 2L
+
         }
         return id
     }

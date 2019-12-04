@@ -9,11 +9,16 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import com.sixnez.model.User
+import com.sixnez.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawer: DrawerLayout
+    private var viewModel : MainViewModel = MainViewModel()
+    private lateinit var navigationView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +29,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer = findViewById(R.id.drawer_layout)
 
-        var navigationView : NavigationView = findViewById(R.id.nav_view)
+        navigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
         var toggle : ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
+
+        viewModel.isConnected.observe(this, Observer { bool ->
+            bool?.let {
+                //connected
+                navigationView.menu.findItem(R.id.nav_logout).setVisible(bool)
+                navigationView.menu.findItem(R.id.nav_profile).setVisible(bool)
+                navigationView.menu.findItem(R.id.nav_movies).setVisible(bool)
+                navigationView.menu.findItem(R.id.nav_actors).setVisible(bool)
+
+                //disconnected
+                navigationView.menu.findItem(R.id.nav_login).setVisible(!bool)
+                navigationView.menu.findItem(R.id.nav_register).setVisible(!bool)
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -41,21 +60,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onStart() {
-        changeFragment(HomeFragment())
+        changeFragment(HomeFragment(), R.id.nav_home)
         super.onStart()
     }
 
-    fun changeFragment(frag: Fragment) {
+    fun changeFragment(frag: Fragment, id : Int = 0) {
         var fragment = frag
-        if (false) {
-            //TODO si aucun user n'est connecté on renvoie vers la connexion
-            fragment = HomeFragment()
-        }
 
         supportFragmentManager.beginTransaction().replace(
             R.id.fragment,
             fragment
         ).commit()
+
+        if (id != 0) {
+
+            navigationView.setCheckedItem(id)
+        }
+    }
+
+    fun connect(user: User?) {
+        viewModel.connect(user)
+    }
+
+    fun disconnect() {
+        viewModel.disconnect()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
