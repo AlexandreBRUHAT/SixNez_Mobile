@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -40,7 +41,7 @@ class LoginFragment : Fragment() {
         }
 
         //Login
-        viewModel.navigateToNextFragment.observe(this, Observer { bool ->
+        viewModel.login.observe(this, Observer { bool ->
             bool?.let {
                 if (bool) {
                     val activity = activity as MainActivity?
@@ -52,7 +53,6 @@ class LoginFragment : Fragment() {
             }
         })
 
-
         //Register
         viewModel.navigateToRegister.observe(this, Observer { bool ->
             bool?.let {
@@ -62,6 +62,14 @@ class LoginFragment : Fragment() {
 
                     viewModel.doneNavigating()
                 }
+            }
+        })
+
+        //Alerts
+        viewModel.alert.observe(this, Observer { message ->
+            message?.let {
+                Toast.makeText(application,message,Toast.LENGTH_SHORT).show()
+                viewModel.doneAlerting()
             }
         })
 

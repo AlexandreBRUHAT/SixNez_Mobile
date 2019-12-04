@@ -28,17 +28,25 @@ class RegisterViewModel(
             _verifPassword = value
         }
 
-
     init {
         Log.i("RegisterViewModel", "created")
     }
 
-    private suspend fun insert(user: User): Long {
-        var id = 0L
+    //alert
+    private val _alert = MutableLiveData<String>()
+
+    val alert: LiveData<String>
+        get() = _alert
+
+    fun doneAlerting() {
+        _alert.value = ""
+    }
+
+    private suspend fun insert(): Boolean { // TODO appel au webservice
         withContext(Dispatchers.IO) {
-            //request insert
+            //
         }
-        return id
+        return true
     }
 
     //end register
@@ -50,29 +58,33 @@ class RegisterViewModel(
 
     fun onValidateAccount() {
         _navigateToLoginFragment.value = true
-        /*
+
         uiScope.launch {
             val user = user.value ?: return@launch
 
             if(user.login.isNullOrEmpty()){
+                _alert.value = "Veuillez entrer un nom de compte"
                 return@launch
             }
 
             if(user.password.isNullOrEmpty()) {
+                _alert.value = "Veuillez entrer un mot de passe"
                 return@launch
             }
 
             if(user.password != verifPassword) {
+                _alert.value = "Les mots de passe ne correspondent pas"
                 return@launch
             }
 
             user.password = encode("SHA1",user.password+"")
 
-            user.id = insert(user)
-
-            _navigateToLoginFragment.value = true
+            if (insert()) {
+                _navigateToLoginFragment.value = true
+            } else {
+                _alert.value = "Échec de l'inscription"
+            }
         }
-         */
     }
 
     fun encode(type:String, input: String): String {

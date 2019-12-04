@@ -1,15 +1,14 @@
 package com.sixnez
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.sixnez.databinding.FragmentRegisterBinding
 import com.sixnez.viewmodel.RegisterViewModel
 import com.sixnez.viewmodelfactory.RegisterViewModelFactory
@@ -52,6 +51,14 @@ class RegisterFragment : Fragment() {
 
                     viewModel.doneNavigating()
                 }
+            }
+        })
+
+        //Alerts
+        viewModel.alert.observe(this, Observer { message ->
+            message?.let {
+                Toast.makeText(application,message, Toast.LENGTH_SHORT).show()
+                viewModel.doneAlerting()
             }
         })
 

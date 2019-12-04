@@ -86,6 +86,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         viewModel.disconnect()
     }
 
+    fun getUsername(): String? {
+        return viewModel.user.value?.login
+    }
+
+    fun isConnected(): Boolean {
+        return viewModel.isConnected.value?:false
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {

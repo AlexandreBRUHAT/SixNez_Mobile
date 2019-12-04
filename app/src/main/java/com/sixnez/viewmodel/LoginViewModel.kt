@@ -11,8 +11,7 @@ import java.security.MessageDigest
 
 
 class LoginViewModel(
-    application: Application,
-    private val userID: Long = 0L // userID
+    application: Application
 ) : AndroidViewModel(application)
 {
     private var viewModelJob = Job()
@@ -26,11 +25,21 @@ class LoginViewModel(
         Log.i("LoginViewModel", "created")
     }
 
-    //log me in
-    private val _navigateToNextFragment = MutableLiveData<Boolean>()
+    //alert
+    private val _alert = MutableLiveData<String>()
 
-    val navigateToNextFragment: LiveData<Boolean>
-        get() = _navigateToNextFragment
+    val alert: LiveData<String>
+        get() = _alert
+
+    fun doneAlerting() {
+        _alert.value = ""
+    }
+
+    //log me in
+    private val _login = MutableLiveData<Boolean>()
+
+    val login: LiveData<Boolean>
+        get() = _login
 
 
     fun onValidateLogin() {
@@ -39,16 +48,19 @@ class LoginViewModel(
             var user = user.value ?: return@launch
 
             if(user.login.isNullOrEmpty()) {
+                _alert.value = "Veuillez entrer un nom de compte"
                 return@launch
             }
 
             if(user.password.isNullOrEmpty()) {
+                _alert.value = "Veuillez entrer un mot de passe"
                 return@launch
             }
-            if (testLogin() != 0L) { // TODO
-                _navigateToNextFragment.value = true
+            if (login()) {
+                _login.value = true
             }
             else {
+                _alert.value = "Connexion échouée"
                 return@launch
             }
         }
@@ -66,21 +78,18 @@ class LoginViewModel(
     }
 
     fun doneNavigating() {
-        _navigateToNextFragment.value = null
+        _login.value = null
         _navigateToRegister.value = false
     }
 
-    private suspend fun testLogin(): Long {
-        var id = 0L
+    private suspend fun login(): Boolean { // TODO appel au webservice
         withContext(Dispatchers.IO) {
-//            id = database.testLogin(user.value?.login?:"",encode("SHA1",user.value?.password+""))
-            id = 2L
-
+            //
         }
-        return id
+        return true
     }
     
-    fun encode(type:String, input: String): String {
+    fun encode(type:String, input: String): String { // TODO look encodage sur la partie Vue
         val HEX_CHARS = "0123456789ABCDEF"
         val bytes = MessageDigest
             .getInstance(type)
