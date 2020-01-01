@@ -43,7 +43,8 @@ class AboutFragment : Fragment() {
 
         binding.apply {
             tvTitle.text = getString(R.string.about_title)
-            tvAbout.text = getString(R.string.about)
+            tvAboutPolytech.text = getString(R.string.about_polytech)
+            tvAboutProject.text = getString(R.string.about_project)
         }
 
         return binding.root
