@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun disconnect() {
         viewModel.disconnect()
+        changeFragment(HomeFragment(), R.id.nav_home)
     }
 
     fun getUsername(): String? {
@@ -110,6 +111,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile -> changeFragment(ProfileFragment())
 
             R.id.nav_about -> changeFragment(AboutFragment())
+
+            R.id.nav_logout -> disconnect()
         }
 
         drawer.closeDrawer(GravityCompat.START)

@@ -44,26 +44,28 @@ class LoginViewModel(
 
     fun onValidateLogin() {
 
-        uiScope.launch {
-            var user = user.value ?: return@launch
+        _login.value = true
 
-            if(user.login.isNullOrEmpty()) {
-                _alert.value = "Veuillez entrer un nom de compte"
-                return@launch
-            }
-
-            if(user.password.isNullOrEmpty()) {
-                _alert.value = "Veuillez entrer un mot de passe"
-                return@launch
-            }
-            if (login()) {
-                _login.value = true
-            }
-            else {
-                _alert.value = "Connexion échouée"
-                return@launch
-            }
-        }
+//        uiScope.launch {
+//            var user = user.value ?: return@launch
+//
+//            if(user.login.isNullOrEmpty()) {
+//                _alert.value = "Veuillez entrer un nom de compte"
+//                return@launch
+//            }
+//
+//            if(user.password.isNullOrEmpty()) {
+//                _alert.value = "Veuillez entrer un mot de passe"
+//                return@launch
+//            }
+//            if (login()) {
+//                _login.value = true
+//            }
+//            else {
+//                _alert.value = "Connexion échouée"
+//                return@launch
+//            }
+//        }
     }
 
     //register

@@ -1,5 +1,6 @@
 package com.sixnez.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sixnez.model.User
@@ -19,12 +20,14 @@ class MainViewModel {
     }
 
     fun connect(userCo: User?) {
+        Log.i("Test","Connected")
         _user.value = userCo
         _isConnected.value = true
     }
 
     fun disconnect() {
-        //_user.value = null
-        _isConnected.value = true
+        Log.i("Test","Disconnected")
+        _user.value = null
+        _isConnected.value = false
     }
 }
