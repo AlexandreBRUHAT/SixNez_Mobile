@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_movies -> changeFragment(FilmsFragment())
 
-            R.id.nav_actors -> changeFragment(ActorsFragment())
+            R.id.nav_actors -> changeFragment(ActeursFragment())
 
             R.id.nav_login -> changeFragment(LoginFragment())
 

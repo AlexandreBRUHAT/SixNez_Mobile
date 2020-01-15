@@ -68,5 +68,15 @@
         Le but de cette application est de proposer une liste de films avec de nombreuses informations sur ces derniers.
         Les membres de l\'équipe sont: Alexandre BRUHAT, Thibault CHATELAIN et Ilorian CIAVALDINI.
     </string>
+    <string name="search">Recherche</string>
+    <string name="search_button">Lancer la recherche</string>
+
+    <string name="result_title">Résultats de la recherche</string>
+
+    <string name="nextPage">Page suivante</string>
+    <string name="precedentPage">Page précédente</string>
+
+    <string name="naissance">Né le</string>
+    <string name="mort">Décédé le</string>
 
 </resources>

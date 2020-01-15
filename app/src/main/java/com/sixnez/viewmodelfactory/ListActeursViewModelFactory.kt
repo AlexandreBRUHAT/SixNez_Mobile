@@ -1,18 +1,18 @@
 package com.sixnez.viewmodelfactory
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sixnez.viewmodel.ActorsViewModel
+import com.sixnez.model.ActeurRequest
+import com.sixnez.viewmodel.ListActeursViewModel
 
-class ActorsViewModelFactory (
-    private val application: Application,
-    private val userID: Long = 0L
+
+class ListActeursViewModelFactory (
+    private val request: ActeurRequest
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ActorsViewModel::class.java)) {
-            return ActorsViewModel(application,userID) as T // userID
+        if (modelClass.isAssignableFrom(ListActeursViewModel::class.java)) {
+            return ListActeursViewModel(request) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
