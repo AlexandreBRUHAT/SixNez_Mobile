@@ -4,12 +4,28 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.sixnez.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Deferred
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 private val BASE_URL =
-    "localhost:8080"
+    "https://sixnez.herokuapp.com"
+    //"localhost:8080"
+
+private const val TOKEN =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZXJsb3QiLCJleHAiOjE1NzkzNzAzOTF9.gj7HWZfkuoPpgCqSz11Ny6O9DgSeFkfVkJUWuG7UggQ"
+
+val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+    this.level = HttpLoggingInterceptor.Level.BASIC
+}
+
+val client : OkHttpClient = OkHttpClient.Builder().apply {
+    this.addInterceptor(interceptor)
+}.build()
+
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -18,24 +34,27 @@ private val moshi = Moshi.Builder()
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
+    .client(client)
     .baseUrl(BASE_URL)
     .build()
 
 interface MyApiService {
     //PUBLIC METHODS
     @GET("login")
-    fun login(@Query("login") login: String,
-              @Query("password") password: String): String
+    fun login(@Query("username") login: String,
+              @Query("password") password: String): Deferred<String>
 
     @POST("register")
-    fun register(@Query("login") login: String,
+    fun register(@Query("username") login: String,
                  @Query("password") password: String) : String
 
     //PRIVATE METHODS
 
     //Films
-    @GET("films") // TODO Pageable page
-    fun getFilms(@Query("genre") genre: String,
+    @GET("films")
+    @Headers("Authorization: Bearer " + TOKEN)
+    fun getFilms(@Query("page") pageNumber: Int,
+                 @Query("genre") genre: String,
                  @Query("like") like: String,
                  @Query("annee") annee: Int): List<FilmDTO>
 
@@ -50,9 +69,11 @@ interface MyApiService {
     fun getGenres() : List<String>
 
     //Acteurs
-    @GET("acteurs") // TODO Pageable page
-    fun getActeurs(@Query("like") like: String,
-                   @Query("metier") metier: String) : List<ActeurDTO>
+    @GET("acteurs")
+    @Headers("Authorization: Bearer " + TOKEN)
+    fun getActeurs(@Query("page") pageNumber: Int,
+                   @Query("like") like: String,
+                   @Query("metier") metier: String) : Deferred<List<ActeurDTO>>
 
     @GET("acteurs/{id}")
     fun getActeur(@Path("id") id: String) : List<ActeurDetailledDTO>

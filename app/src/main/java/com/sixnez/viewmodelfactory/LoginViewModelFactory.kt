@@ -11,7 +11,7 @@ class LoginViewModelFactory (
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(application) as T // userID
+            return LoginViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

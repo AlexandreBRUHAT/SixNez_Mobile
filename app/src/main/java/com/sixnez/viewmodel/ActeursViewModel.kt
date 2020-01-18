@@ -16,13 +16,14 @@ class ActeursViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    init {
-        Log.i("ActeursViewModel", "created")
-    }
-
     private val _request = MutableLiveData<ActeurRequest>()
     val request: LiveData<ActeurRequest>
         get() = _request
+
+    init {
+        Log.i("ActeursViewModel", "created")
+        _request.value = ActeurRequest()
+    }
 
     //launch request
     private val _navigateToListActorsFragment = MutableLiveData<ActeurRequest>()
@@ -30,7 +31,7 @@ class ActeursViewModel(
         get() = _navigateToListActorsFragment
 
     fun onValidateSearch() {
-        _navigateToListActorsFragment.value = request.value
+        _navigateToListActorsFragment.value = _request.value
     }
 
     fun doneNavigating() {

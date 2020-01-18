@@ -1,6 +1,7 @@
 package com.sixnez
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +69,7 @@ class LoginFragment : Fragment() {
         //Alerts
         viewModel.alert.observe(this, Observer { message ->
             message?.let {
-                Toast.makeText(application,message,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
                 viewModel.doneAlerting()
             }
         })
