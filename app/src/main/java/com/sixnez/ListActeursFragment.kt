@@ -1,6 +1,7 @@
 package com.sixnez
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.sixnez.adapter.ActeurAdapter
 import com.sixnez.adapter.ActeurListener
 import com.sixnez.databinding.FragmentListActeursBinding
+import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.ActeurRequest
 import com.sixnez.viewmodel.ListActeursViewModel
 import com.sixnez.viewmodelfactory.ListActeursViewModelFactory
@@ -44,8 +46,11 @@ class ListActeursFragment (req: ActeurRequest): Fragment() {
         }
 
         val adapter = ActeurAdapter(ActeurListener { acteur ->
-            val activity = activity as MainActivity?
-            activity?.changeFragment(ActeurDetailsFragment(acteur))
+            viewModel.getActeurById(acteur.id)
+            if (viewModel.acteur.value != null) {
+                val activity = activity as MainActivity?
+                activity?.changeFragment(ActeurDetailsFragment(viewModel.acteur.value as ActeurDetailledDTO))
+            }
         })
         binding.list.adapter = adapter
 

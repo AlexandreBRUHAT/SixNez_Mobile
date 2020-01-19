@@ -8,6 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import com.sixnez.model.User
 import com.sixnez.service.MyApi
 import kotlinx.coroutines.*
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.Exception
 import java.security.MessageDigest
 
 
@@ -44,18 +49,33 @@ class RegisterViewModel(
         _alert.value = null
     }
 
-    private suspend fun insert(): Boolean {
+    private suspend fun insert() {
         Log.i("Register","Starting API Call")
-        val response = MyApi.retrofitService.register(""+_user.value?.login,  encode("SHA1",user.value?.password+""))
+        //TODO Encodage ???
+        val resp =
+            MyApi.retrofitService.register(""+_user.value?.login,
+                ""+user.value?.password)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        try {
+                            Log.i("onResponse", ""+response.code())
 
+                            if (response.code() != 200) {
+                                _alert.value = "Cet identifiant n'est pas disponible"
+                            } else {
+                                _alert.value = "Vous avez bien été inscrit !"
+                                _navigateToLoginFragment.value = true
+                            }
 
-        if (true) {
-            _alert.value = "Cet identifiant est déjà utilisé."
-            return false
-        }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
 
-        _alert.value = "Vous avez bien été inscrit !"
-        return true
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        t.printStackTrace()
+                    }
+                })
     }
 
     //end register
@@ -86,11 +106,7 @@ class RegisterViewModel(
                 return@launch
             }
 
-            if (insert()) {
-                _navigateToLoginFragment.value = true
-            } else {
-                _alert.value = "Échec de l'inscription"
-            }
+            insert()
         }
     }
 

@@ -88,7 +88,8 @@ interface MyApiService {
                    @Header("Authorization")token: String) : Deferred<List<ActeurDTO>>
 
     @GET("acteurs/{id}")
-    fun getActeur(@Path("id") id: String) : List<ActeurDetailledDTO>
+    fun getActeur(@Path("id") id: String,
+                  @Header("Authorization")token: String) : Deferred<ActeurDetailledDTO>
 
     //Favs
     @POST("favs") // TODO vérif RequestBody

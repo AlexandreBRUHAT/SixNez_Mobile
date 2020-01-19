@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sixnez.model.ActeurDTO
+import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.ActeurRequest
 import com.sixnez.service.MyApi
 import com.sixnez.service.MyApiService
@@ -22,6 +23,10 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
     private val _acteurs = MutableLiveData<List<ActeurDTO>>()
     val acteurs: LiveData<List<ActeurDTO>>
         get() = _acteurs
+
+    private val _acteur = MutableLiveData<ActeurDetailledDTO>()
+    val acteur: LiveData<ActeurDetailledDTO>
+        get() = _acteur
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -50,7 +55,7 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
         var getActeurs = MyApi.retrofitService.getActeurs(
             request.page,
             "" + request.query,
-            "",
+            "" + request.metier,
             "Bearer "+ getToken()
         )
 
@@ -67,6 +72,24 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
                 Log.i("Echec", e.message)
             }
         }
+    }
+
+    public fun getActeurById(idActeur: String) {
+        var getActeur = MyApi.retrofitService.getActeur(idActeur, "Bearer "+getToken())
+
+        coroutineScope.launch {
+            try {
+                Log.i("getActeurById", "started")
+                var result = getActeur.await()
+                _acteur.value = result
+            } catch (e: Exception) {
+                Log.i("Echec", e.message)
+            }
+        }
+    }
+
+    fun doneActeur()  {
+        _acteur.value = null
     }
 
     fun goToPrecedentPage() {

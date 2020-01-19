@@ -48,6 +48,6 @@ class ActeurDiffCallback : DiffUtil.ItemCallback<ActeurDTO>() {
 }
 
 
-class ActeurListener(val clickListener: (musee: ActeurDTO) -> Unit) {
-    fun onClick(musee: ActeurDTO) = clickListener(musee)
+class ActeurListener(val clickListener: (acteur: ActeurDTO) -> Unit) {
+    fun onClick(acteur: ActeurDTO) = clickListener(acteur)
 }

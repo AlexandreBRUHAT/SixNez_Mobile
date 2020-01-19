@@ -5,7 +5,7 @@ class ActeurRequest() {
     var query: String? = ""
 
     //tri
-    var metier: String? = "acteur"
+    var metier: String? = ""
 
     //pages
     var page: Int = 0

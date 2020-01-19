@@ -9,15 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.sixnez.databinding.FragmentActeurDetailsBinding
 import com.sixnez.model.ActeurDTO
+import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.viewmodel.ActeurDetailsViewModel
 import com.sixnez.viewmodelfactory.ActeurDetailsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_acteur_details.*
 
-class ActeurDetailsFragment (act: ActeurDTO) : Fragment() {
+class ActeurDetailsFragment (act: ActeurDetailledDTO) : Fragment() {
     private lateinit var binding: FragmentActeurDetailsBinding
     private lateinit var viewModel: ActeurDetailsViewModel
     private lateinit var viewModelFactory: ActeurDetailsViewModelFactory
-    private lateinit var acteur: ActeurDTO
+    private var acteur: ActeurDetailledDTO
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +38,8 @@ class ActeurDetailsFragment (act: ActeurDTO) : Fragment() {
         binding.viewModel = viewModel
 
         binding.apply {
-            tvMort1.text = getString(R.string.mort)
-            tvNaissance1.text = getString(R.string.naissance)
+//            tvMort1.text = getString(R.string.mort)
+//            tvNaissance1.text = getString(R.string.naissance)
         }
 
         return binding.root
