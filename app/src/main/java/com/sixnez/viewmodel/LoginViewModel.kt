@@ -10,6 +10,15 @@ import com.sixnez.service.MyApi
 import kotlinx.coroutines.*
 import java.lang.Exception
 import java.security.MessageDigest
+import android.R.string
+import okhttp3.ResponseBody
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.sixnez.service.MyApiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.sixnez.service.setToken
 
 
 class LoginViewModel(
@@ -40,9 +49,9 @@ class LoginViewModel(
     }
 
     //log me in
-    private val _login = MutableLiveData<Boolean>()
+    private val _login = MutableLiveData<String>()
 
-    val login: LiveData<Boolean>
+    val login: LiveData<String>
         get() = _login
 
 
@@ -60,13 +69,10 @@ class LoginViewModel(
                 _alert.value = "Veuillez entrer un mot de passe"
                 return@launch
             }
-            if (login()) {
-                _login.value = true
-            }
-            else {
-                _alert.value = "Connexion échouée"
-                return@launch
-            }
+
+            login()
+
+            return@launch
         }
     }
 
@@ -87,18 +93,49 @@ class LoginViewModel(
         _navigateToRegister.value = false
     }
 
-    private suspend fun login(): Boolean {
+    private suspend fun login() {
         Log.i("Login","Starting API Call")
-        val response = MyApi.retrofitService.login(""+_user.value?.login, ""+user.value?.password)
+        //TODO Encodage ???
+        val resp =
+            MyApi.retrofitService.login(""+_user.value?.login,
+                ""+user.value?.password)
+                .enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                try {
+                    Log.i("onResponse", ""+response.code())
 
-        try {
-            _alert.value = response.await()
-        } catch (e: Exception) {
-            _alert.value = "L'identifiant et le mot de passe ne correspondent pas"
-            return false
+                    if (response.code() != 200) {
+                        _alert.value = "L'identifiant et le mot de passe ne correspondent pas"
+                    } else {
+                        _login.value = response.body()!!.string()
+                    }
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    // TODO utile ?
+    fun encode(type:String, input: String): String {
+        val HEX_CHARS = "0123456789ABCDEF"
+        val bytes = MessageDigest
+            .getInstance(type)
+            .digest(input.toByteArray())
+        val result = StringBuilder(bytes.size * 2)
+
+        bytes.forEach {
+            val i = it.toInt()
+            result.append(HEX_CHARS[i shr 4 and 0x0f])
+            result.append(HEX_CHARS[i and 0x0f])
         }
 
-        return true
+        return result.toString()
     }
 
     override fun onCleared() {

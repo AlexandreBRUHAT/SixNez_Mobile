@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.sixnez.databinding.FragmentLoginBinding
+import com.sixnez.service.setToken
 import com.sixnez.viewmodel.LoginViewModel
 import com.sixnez.viewmodelfactory.LoginViewModelFactory
 
@@ -42,15 +43,14 @@ class LoginFragment : Fragment() {
         }
 
         //Login
-        viewModel.login.observe(this, Observer { bool ->
-            bool?.let {
-                if (bool) {
-                    val activity = activity as MainActivity?
-                    activity?.connect(viewModel.user.value)
-                    activity?.changeFragment(HomeFragment(), R.id.nav_home)
+        viewModel.login.observe(this, Observer { token ->
+            token?.let {
+                val activity = activity as MainActivity?
+                activity?.connect(viewModel.user.value)
+                setToken(token)
+                activity?.changeFragment(HomeFragment(), R.id.nav_home)
 
-                    viewModel.doneNavigating()
-                }
+                viewModel.doneNavigating()
             }
         })
 

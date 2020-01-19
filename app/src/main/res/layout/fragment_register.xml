@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/password_verif"
-                android:text="@={viewModel.user.password}" />
+                android:text="@={viewModel.verifPassword}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

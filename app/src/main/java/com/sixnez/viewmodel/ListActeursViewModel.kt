@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.sixnez.model.ActeurDTO
 import com.sixnez.model.ActeurRequest
 import com.sixnez.service.MyApi
+import com.sixnez.service.MyApiService
+import com.sixnez.service.getToken
 import kotlinx.coroutines.*
 
 class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
@@ -48,7 +50,8 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
         var getActeurs = MyApi.retrofitService.getActeurs(
             request.page,
             "" + request.query,
-            "" + request.metier
+            "",
+            "Bearer "+ getToken()
         )
 
         coroutineScope.launch {

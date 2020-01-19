@@ -6,7 +6,9 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -17,6 +19,16 @@ private val BASE_URL =
 
 private const val TOKEN =
     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZXJsb3QiLCJleHAiOjE1NzkzNzAzOTF9.gj7HWZfkuoPpgCqSz11Ny6O9DgSeFkfVkJUWuG7UggQ"
+
+private lateinit var token : String
+
+fun setToken(tok: String) {
+    token = tok
+}
+
+fun getToken(): String {
+    return token
+}
 
 val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
     this.level = HttpLoggingInterceptor.Level.BASIC
@@ -42,21 +54,21 @@ interface MyApiService {
     //PUBLIC METHODS
     @GET("login")
     fun login(@Query("username") login: String,
-              @Query("password") password: String): Deferred<String>
+              @Query("password") password: String) : Call<ResponseBody>
 
     @POST("register")
     fun register(@Query("username") login: String,
-                 @Query("password") password: String) : String
+                 @Query("password") password: String): Call<ResponseBody>
 
     //PRIVATE METHODS
 
     //Films
     @GET("films")
-    @Headers("Authorization: Bearer " + TOKEN)
     fun getFilms(@Query("page") pageNumber: Int,
                  @Query("genre") genre: String,
                  @Query("like") like: String,
-                 @Query("annee") annee: Int): List<FilmDTO>
+                 @Query("annee") annee: Int,
+                 @Header("Authorization")token: String): List<FilmDTO>
 
     @GET("films/{id}")
     fun getFilm(@Path("id") id: String) : FilmDetailledDTO
@@ -70,10 +82,10 @@ interface MyApiService {
 
     //Acteurs
     @GET("acteurs")
-    @Headers("Authorization: Bearer " + TOKEN)
     fun getActeurs(@Query("page") pageNumber: Int,
                    @Query("like") like: String,
-                   @Query("metier") metier: String) : Deferred<List<ActeurDTO>>
+                   @Query("metier") metier: String,
+                   @Header("Authorization")token: String) : Deferred<List<ActeurDTO>>
 
     @GET("acteurs/{id}")
     fun getActeur(@Path("id") id: String) : List<ActeurDetailledDTO>
@@ -92,6 +104,3 @@ interface MyApiService {
 object MyApi {
     val retrofitService : MyApiService by lazy { retrofit.create(MyApiService::class.java) }
 }
-
-class Token(val token: String = "",
-    val type: String = "")

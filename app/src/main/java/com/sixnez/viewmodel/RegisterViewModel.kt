@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sixnez.model.User
+import com.sixnez.service.MyApi
 import kotlinx.coroutines.*
 import java.security.MessageDigest
 
@@ -30,6 +31,7 @@ class RegisterViewModel(
 
     init {
         Log.i("RegisterViewModel", "created")
+        _user.value = User()
     }
 
     //alert
@@ -39,13 +41,20 @@ class RegisterViewModel(
         get() = _alert
 
     fun doneAlerting() {
-        _alert.value = ""
+        _alert.value = null
     }
 
-    private suspend fun insert(): Boolean { // TODO appel au webservice
-        withContext(Dispatchers.IO) {
-            //
+    private suspend fun insert(): Boolean {
+        Log.i("Register","Starting API Call")
+        val response = MyApi.retrofitService.register(""+_user.value?.login,  encode("SHA1",user.value?.password+""))
+
+
+        if (true) {
+            _alert.value = "Cet identifiant est déjà utilisé."
+            return false
         }
+
+        _alert.value = "Vous avez bien été inscrit !"
         return true
     }
 
@@ -57,7 +66,7 @@ class RegisterViewModel(
 
 
     fun onValidateAccount() {
-        _navigateToLoginFragment.value = true
+//        _navigateToLoginFragment.value = true
 
         uiScope.launch {
             val user = user.value ?: return@launch
@@ -72,12 +81,10 @@ class RegisterViewModel(
                 return@launch
             }
 
-            if(user.password != verifPassword) {
+            if(!user.password.equals(verifPassword)) {
                 _alert.value = "Les mots de passe ne correspondent pas"
                 return@launch
             }
-
-            user.password = encode("SHA1",user.password+"")
 
             if (insert()) {
                 _navigateToLoginFragment.value = true
