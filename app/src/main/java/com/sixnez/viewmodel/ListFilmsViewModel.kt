@@ -4,29 +4,29 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sixnez.model.ActeurDTO
-import com.sixnez.model.ActeurDetailledDTO
-import com.sixnez.model.ActeurRequest
+import com.sixnez.model.FilmDTO
+import com.sixnez.model.FilmDetailledDTO
+import com.sixnez.model.FilmRequest
 import com.sixnez.service.MyApi
 import com.sixnez.service.MyApiService
 import com.sixnez.service.getToken
 import kotlinx.coroutines.*
 
-class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
+class ListFilmsViewModel(req: FilmRequest) : ViewModel() {
 
-    private lateinit var request: ActeurRequest
+    private lateinit var request: FilmRequest
 
     private val _response = MutableLiveData<String>()
     val response: LiveData<String>
         get() = _response
 
-    private val _acteurs = MutableLiveData<List<ActeurDTO>>()
-    val acteurs: LiveData<List<ActeurDTO>>
-        get() = _acteurs
+    private val _films = MutableLiveData<List<FilmDTO>>()
+    val films: LiveData<List<FilmDTO>>
+        get() = _films
 
-    private val _acteur = MutableLiveData<ActeurDetailledDTO>()
-    val acteur: LiveData<ActeurDetailledDTO>
-        get() = _acteur
+    private val _film = MutableLiveData<FilmDetailledDTO>()
+    val film: LiveData<FilmDetailledDTO>
+        get() = _film
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -46,60 +46,62 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
 
     init {
         this.request = req
-        getActorsList()
+        getFilmsList()
         _currentPage.value = 0
+        doneFilm()
     }
 
-    private fun getActorsList() {
+    private fun getFilmsList() {
         _isLoading.value = true
-        var getActeurs = MyApi.retrofitService.getActeurs(
+        var getFilms = MyApi.retrofitService.getFilms(
             request.page,
+            request.genre,
             "" + request.query,
-            request.metier,
+            request.annee,
             "Bearer "+ getToken()
         )
 
         coroutineScope.launch {
             try {
-                Log.i("getActeurs", "started")
-                var result = getActeurs.await()
+                Log.i("getFilms", "started")
+                var result = getFilms.await()
 
-                _acteurs.value = result
+                _films.value = result
 
                 _isLoading.value = false
-                Log.i("getActeurs", "Succès : " +result.size +" acteurs récupérés")
+                Log.i("getFilms", "Succès : " +result.size +" films récupérés")
             } catch (e: Exception) {
                 Log.i("Echec", e.message)
             }
         }
     }
 
-    public fun getActeurById(idActeur: String) {
-        var getActeur = MyApi.retrofitService.getActeur(idActeur, "Bearer "+getToken())
+    public fun getFilmById(idFilm: String) {
+        var getFilm = MyApi.retrofitService.getFilm(idFilm, "Bearer "+getToken())
 
         coroutineScope.launch {
             try {
-                Log.i("getActeurById", "started")
-                var result = getActeur.await()
-                _acteur.value = result
+                Log.i("getFilmById", "started")
+                var result = getFilm.await()
+                _film.value = result
             } catch (e: Exception) {
                 Log.i("Echec", e.message)
             }
         }
     }
 
-    fun doneActeur()  {
-        _acteur.value = null
+    fun doneFilm()  {
+        _film.value = null
     }
 
     fun goToPrecedentPage() {
         this.request.page = this.request.page - request.rows
-        getActorsList()
+        getFilmsList()
     }
 
     fun goToNextPage() {
         this.request.page = this.request.page + request.rows
-        getActorsList()
+        getFilmsList()
     }
 
     override fun onCleared() {

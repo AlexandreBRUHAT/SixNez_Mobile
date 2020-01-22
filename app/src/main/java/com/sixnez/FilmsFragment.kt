@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,10 +19,12 @@ import com.sixnez.viewmodel.LoginViewModel
 import com.sixnez.viewmodelfactory.FilmsViewModelFactory
 import com.sixnez.viewmodelfactory.LoginViewModelFactory
 
-class FilmsFragment : Fragment() {
+class FilmsFragment(grs: List<String>) : Fragment() {
     private lateinit var binding: FragmentFilmsBinding
     private lateinit var viewModel: FilmsViewModel
     private lateinit var viewModelFactory: FilmsViewModelFactory
+
+    private lateinit var genres: List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,8 +45,42 @@ class FilmsFragment : Fragment() {
 
         binding.apply {
             tvTitle.text = getString(R.string.films_title)
+            btSearch.text = getString(R.string.search_button)
+            spGenre.adapter = ArrayAdapter<String>(application,android.R.layout.simple_list_item_1, genres)
+            spGenre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    //
+                }
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    viewModel?.onGenreSelected(genres.get(position))
+                }
+
+            }
         }
 
+        //Search
+        viewModel.navigateToListFilmsFragment.observe(this, Observer { request ->
+            request?.let {
+                val activity = activity as MainActivity?
+                activity?.changeFragment(ListFilmsFragment(request))
+
+                viewModel.doneNavigating()
+            }
+        })
+
+        //Alerts
+        viewModel.alert.observe(this, Observer { message ->
+            message?.let {
+                Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+                viewModel.doneAlerting()
+            }
+        })
+
         return binding.root
+    }
+
+    init {
+        genres = grs
     }
 }

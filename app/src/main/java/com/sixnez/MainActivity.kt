@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.sixnez.model.User
+import com.sixnez.service.setToken
 import com.sixnez.viewmodel.MainViewModel
 
 
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun disconnect() {
         viewModel.disconnect()
         changeFragment(HomeFragment(), R.id.nav_home)
+        setToken("")
     }
 
     fun getUsername(): String? {
@@ -100,7 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_home -> changeFragment(HomeFragment())
 
-            R.id.nav_movies -> changeFragment(FilmsFragment())
+            R.id.nav_movies -> changeFragment(FilmsFragment(viewModel.getGenres()))
 
             R.id.nav_actors -> changeFragment(ActeursFragment())
 

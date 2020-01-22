@@ -1,17 +1,18 @@
 package com.sixnez.viewmodelfactory
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sixnez.viewmodel.FilmsViewModel
+import com.sixnez.model.FilmRequest
+import com.sixnez.viewmodel.ListFilmsViewModel
 
-class FilmsViewModelFactory (
-    private val application: Application
+
+class ListFilmsViewModelFactory (
+    private val request: FilmRequest
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FilmsViewModel::class.java)) {
-            return FilmsViewModel(application) as T
+        if (modelClass.isAssignableFrom(ListFilmsViewModel::class.java)) {
+            return ListFilmsViewModel(request) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -17,9 +17,6 @@ private val BASE_URL =
     "https://sixnez.herokuapp.com"
     //"localhost:8080"
 
-private const val TOKEN =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZXJsb3QiLCJleHAiOjE1NzkzNzAzOTF9.gj7HWZfkuoPpgCqSz11Ny6O9DgSeFkfVkJUWuG7UggQ"
-
 private lateinit var token : String
 
 fun setToken(tok: String) {
@@ -65,26 +62,29 @@ interface MyApiService {
     //Films
     @GET("films")
     fun getFilms(@Query("page") pageNumber: Int,
-                 @Query("genre") genre: String,
+                 @Query("genre") genre: String?,
                  @Query("like") like: String,
-                 @Query("annee") annee: Int,
-                 @Header("Authorization")token: String): List<FilmDTO>
+                 @Query("annee") annee: String?,
+                 @Header("Authorization")token: String): Deferred<List<FilmDTO>>
 
     @GET("films/{id}")
-    fun getFilm(@Path("id") id: String) : FilmDetailledDTO
+    fun getFilm(@Path("id") id: String,
+                @Header("Authorization")token: String) : Deferred<FilmDetailledDTO>
 
-    @GET("pictures") // TODO vérif RequestBody
-    fun getPictures(@Query("ids") ids: List<FilmIdDTO>) : List<FilmURLDTO>
+    //TODO
+    @GET("pictures")
+    fun getPictures(@Query("ids") ids: List<FilmIdDTO>,
+                    @Header("Authorization") token: String) : Deferred<List<FilmURLDTO>>
 
     //Genres
     @GET("genres")
-    fun getGenres() : List<String>
+    fun getGenres(@Header("Authorization") token: String) : Deferred<List<String>>
 
     //Acteurs
     @GET("acteurs")
     fun getActeurs(@Query("page") pageNumber: Int,
                    @Query("like") like: String,
-                   @Query("metier") metier: String,
+                   @Query("metier") metier: String?,
                    @Header("Authorization")token: String) : Deferred<List<ActeurDTO>>
 
     @GET("acteurs/{id}")
@@ -92,13 +92,14 @@ interface MyApiService {
                   @Header("Authorization")token: String) : Deferred<ActeurDetailledDTO>
 
     //Favs
-    @POST("favs") // TODO vérif RequestBody
+    //TODO
+    @POST("favs")
     fun setFavs()
 
-    @DELETE("favs") // TODO vérif RequestBody
+    @DELETE("favs")
     fun deleteFavs()
 
-    @GET("favs") // TODO Pageable page
+    @GET("favs")
     fun getFavs() : List<FilmDTO>
 }
 

@@ -1,11 +1,12 @@
 package com.sixnez.model
 
-class ActeurRequest() {
+class FilmRequest() {
     //recherche
     var query: String? = ""
 
     //tri
-    var metier: String? = null
+    var genre: String? = null
+    var annee: String? = null
 
     //pages
     var page: Int = 0
@@ -13,7 +14,8 @@ class ActeurRequest() {
 
     override fun toString(): String {
         var message = "Refine type : "+ this.query + "\n"+
-                "Métier : "+this.metier+"\n"+
+                "Métier : "+this.genre+"\n"+
+                "Année : "+this.annee+"\n"+
                 "Page : "+this.page+"\n"+
                 "Rows : "+this.rows+"\n"
 
