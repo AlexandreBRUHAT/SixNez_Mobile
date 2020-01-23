@@ -16,6 +16,14 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp">
 
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_actor"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tv_name"
@@ -27,7 +35,7 @@
             android:gravity="center"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/image" />
 
         <View
             android:id="@+id/separator"
@@ -41,53 +49,88 @@
 
         <!-- _____________________________ -->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lay_naissance"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/separator">-->
-<!--            <TextView-->
-<!--                android:id="@+id/tv_naissance1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
-<!--                android:textSize="12sp" />-->
-<!--            <TextView-->
-<!--                android:id="@+id/tv_naissance"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@{viewModel.acteur.naissance}"-->
-<!--                android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
-<!--                android:textSize="12sp" />-->
-<!--        </LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/lay_naissance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separator">
+            <TextView
+                android:id="@+id/tv_naissance1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tv_naissance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(viewModel.acteur.naissance)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="15sp" />
+        </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lay_mort"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/lay_naissance">-->
-<!--            <TextView-->
-<!--                android:id="@+id/tv_mort1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
-<!--                android:textSize="12sp" />-->
-<!--            <TextView-->
-<!--                android:id="@+id/tv_mort"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@{viewModel.acteur.mort}"-->
-<!--                android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
-<!--                android:textSize="12sp" />-->
-<!--        </LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/lay_mort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lay_naissance">
+            <TextView
+                android:id="@+id/tv_mort1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tv_mort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(viewModel.acteur.mort)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="15sp" />
+        </LinearLayout>
 
-        <!-- TODO metier/filmsDTO -->
+        <LinearLayout
+            android:id="@+id/lay_metier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lay_mort">
+            <TextView
+                android:id="@+id/tv_metier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tv_metier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(viewModel.acteur.metier)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lay_metier" />
+
+        <!-- _____________________________ -->
+
+        <!-- TODO filmsDTO -->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

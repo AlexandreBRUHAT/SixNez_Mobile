@@ -76,7 +76,13 @@
     <string name="nextPage">Page suivante</string>
     <string name="precedentPage">Page précédente</string>
 
-    <string name="naissance">Né le</string>
-    <string name="mort">Décédé le</string>
+    <string name="naissance">Né en</string>
+    <string name="mort">Décédé en</string>
+    <string name="sortie">Sorti en</string>
+    <string name="categories">Catégories</string>
+    <string name="metiers">Métiers</string>
+    <string name="acteurs">Acteurs</string>
+    <string name="films">Films</string>
+
 
 </resources>

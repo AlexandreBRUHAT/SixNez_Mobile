@@ -15,6 +15,7 @@ import com.sixnez.model.FilmDetailledDTO
 import com.sixnez.model.FilmRequest
 import com.sixnez.viewmodel.ListFilmsViewModel
 import com.sixnez.viewmodelfactory.ListFilmsViewModelFactory
+import kotlinx.android.synthetic.main.item_film_view.*
 
 class ListFilmsFragment (req: FilmRequest): Fragment() {
     private lateinit var binding: FragmentListFilmsBinding

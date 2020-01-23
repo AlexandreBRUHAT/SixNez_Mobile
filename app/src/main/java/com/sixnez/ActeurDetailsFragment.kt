@@ -38,8 +38,15 @@ class ActeurDetailsFragment (act: ActeurDetailledDTO) : Fragment() {
         binding.viewModel = viewModel
 
         binding.apply {
-//            tvMort1.text = getString(R.string.mort)
-//            tvNaissance1.text = getString(R.string.naissance)
+            tvMort1.text = getString(R.string.mort)
+            tvNaissance1.text = getString(R.string.naissance)
+            layMort.visibility = View.VISIBLE
+            if (acteur.mort == null) {
+                layMort.visibility = View.GONE
+            } else {
+                layMort.visibility = View.VISIBLE
+            }
+            tvMetier1.text = getString(R.string.metiers)
         }
 
         return binding.root

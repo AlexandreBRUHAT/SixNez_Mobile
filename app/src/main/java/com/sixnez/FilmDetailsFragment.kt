@@ -12,6 +12,7 @@ import com.sixnez.model.FilmDTO
 import com.sixnez.model.FilmDetailledDTO
 import com.sixnez.viewmodel.FilmDetailsViewModel
 import com.sixnez.viewmodelfactory.FilmDetailsViewModelFactory
+import kotlinx.android.synthetic.main.fragment_film_details.*
 
 class FilmDetailsFragment (flm: FilmDetailledDTO) : Fragment() {
     private lateinit var binding: FragmentFilmDetailsBinding
@@ -37,7 +38,8 @@ class FilmDetailsFragment (flm: FilmDetailledDTO) : Fragment() {
         binding.viewModel = viewModel
 
         binding.apply {
-            //
+            tvAnnee1.text = getString(R.string.sortie)
+            tvCategories1.text = getString(R.string.categories)
         }
 
         return binding.root
