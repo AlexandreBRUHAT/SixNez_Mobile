@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.nav_home -> changeFragment(HomeFragment())
 
-            R.id.nav_movies -> changeFragment(FilmsFragment(viewModel.getGenres()))
+            R.id.nav_movies -> changeFragment(FilmsFragment())
 
             R.id.nav_actors -> changeFragment(ActeursFragment())
 

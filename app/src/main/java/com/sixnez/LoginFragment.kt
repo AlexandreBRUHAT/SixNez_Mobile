@@ -48,6 +48,8 @@ class LoginFragment : Fragment() {
                 val activity = activity as MainActivity?
                 activity?.connect(viewModel.user.value)
                 setToken(token)
+                activity?.connect(viewModel.user.value)
+                Toast.makeText(this.context, "Bienvenue "+viewModel.user.value?.login + " !", Toast.LENGTH_SHORT).show()
                 activity?.changeFragment(HomeFragment(), R.id.nav_home)
 
                 viewModel.doneNavigating()

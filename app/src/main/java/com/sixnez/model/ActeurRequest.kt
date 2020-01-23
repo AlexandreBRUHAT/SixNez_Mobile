@@ -2,7 +2,7 @@ package com.sixnez.model
 
 class ActeurRequest() {
     //recherche
-    var query: String? = ""
+    var query: String? = null
 
     //tri
     var metier: String? = null

@@ -10,6 +10,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.Exception
 
 class MainViewModel {
     private var viewModelJob = Job()
@@ -23,34 +28,9 @@ class MainViewModel {
     val user: LiveData<User>
         get() = _user
 
-    private var genres : List<String> = ArrayList<String>()
-
     init {
         _user.value = null
         _isConnected.value = false
-    }
-
-    fun getGenres(): List<String> {
-        if (genres.isEmpty()) {
-            var getGenres = MyApi.retrofitService.getGenres(
-                "Bearer " + getToken()
-            )
-
-            coroutineScope.launch {
-                try {
-                    Log.i("getGenres", "started")
-                    var result = getGenres.await()
-
-                    genres = result
-
-                    Log.i("getGenres", "Succès : " + result.size + " genres récupérés")
-                } catch (e: Exception) {
-                    Log.i("Echec", e.message)
-                }
-            }
-        }
-
-        return genres
     }
 
     fun connect(userCo: User?) {

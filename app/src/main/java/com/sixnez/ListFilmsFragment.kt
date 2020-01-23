@@ -45,16 +45,21 @@ class ListFilmsFragment (req: FilmRequest): Fragment() {
 
         val adapter = FilmAdapter(FilmListener { Film ->
             viewModel.getFilmById(Film.id)
-            if (viewModel.film.value != null) {
-                val activity = activity as MainActivity?
-                activity?.changeFragment(FilmDetailsFragment(viewModel.film.value as FilmDetailledDTO))
-            }
+            viewModel.loading(true)
+
         })
         binding.list.adapter = adapter
 
         viewModel.films.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+
+        viewModel.film.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val activity = activity as MainActivity?
+                activity?.changeFragment(FilmDetailsFragment(viewModel.film.value as FilmDetailledDTO))
             }
         })
 

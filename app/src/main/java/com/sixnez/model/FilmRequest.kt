@@ -2,7 +2,7 @@ package com.sixnez.model
 
 class FilmRequest() {
     //recherche
-    var query: String? = ""
+    var query: String? = null
 
     //tri
     var genre: String? = null

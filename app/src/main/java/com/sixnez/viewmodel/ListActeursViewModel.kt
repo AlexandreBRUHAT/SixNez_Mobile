@@ -74,6 +74,10 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
         }
     }
 
+    fun loading(b: Boolean) {
+        _isLoading.value = b
+    }
+
     public fun getActeurById(idActeur: String) {
         var getActeur = MyApi.retrofitService.getActeur(idActeur, "Bearer "+getToken())
 

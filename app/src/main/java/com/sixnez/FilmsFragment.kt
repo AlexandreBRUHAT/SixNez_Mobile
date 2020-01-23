@@ -18,13 +18,12 @@ import com.sixnez.viewmodel.FilmsViewModel
 import com.sixnez.viewmodel.LoginViewModel
 import com.sixnez.viewmodelfactory.FilmsViewModelFactory
 import com.sixnez.viewmodelfactory.LoginViewModelFactory
+import kotlinx.android.synthetic.main.fragment_films.*
 
-class FilmsFragment(grs: List<String>) : Fragment() {
+class FilmsFragment() : Fragment() {
     private lateinit var binding: FragmentFilmsBinding
     private lateinit var viewModel: FilmsViewModel
     private lateinit var viewModelFactory: FilmsViewModelFactory
-
-    private lateinit var genres: List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,17 +45,17 @@ class FilmsFragment(grs: List<String>) : Fragment() {
         binding.apply {
             tvTitle.text = getString(R.string.films_title)
             btSearch.text = getString(R.string.search_button)
-            spGenre.adapter = ArrayAdapter<String>(application,android.R.layout.simple_list_item_1, genres)
-            spGenre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    //
-                }
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    viewModel?.onGenreSelected(genres.get(position))
-                }
-
-            }
+//            spGenre.adapter = ArrayAdapter<String>(application,android.R.layout.simple_list_item_1, genres)
+//            spGenre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+//                override fun onNothingSelected(parent: AdapterView<*>?) {
+//                    //
+//                }
+//
+//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                    viewModel?.onGenreSelected(genres.get(position))
+//                }
+//
+//            }
         }
 
         //Search
@@ -69,6 +68,23 @@ class FilmsFragment(grs: List<String>) : Fragment() {
             }
         })
 
+        //Genres
+        viewModel.genres.observe(this, Observer { genres ->
+            genres?.let {
+                sp_genre.adapter = ArrayAdapter<String>(application,android.R.layout.simple_list_item_1, genres)
+                sp_genre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        //
+                    }
+
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        viewModel.onGenreSelected(genres.get(position))
+                    }
+
+                }
+            }
+        })
+
         //Alerts
         viewModel.alert.observe(this, Observer { message ->
             message?.let {
@@ -78,9 +94,5 @@ class FilmsFragment(grs: List<String>) : Fragment() {
         })
 
         return binding.root
-    }
-
-    init {
-        genres = grs
     }
 }

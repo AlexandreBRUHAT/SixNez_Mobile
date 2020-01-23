@@ -78,7 +78,7 @@ interface MyApiService {
 
     //Genres
     @GET("genres")
-    fun getGenres(@Header("Authorization") token: String) : Deferred<List<String>>
+    fun getGenres(@Header("Authorization") token: String) : Call<ResponseBody>
 
     //Acteurs
     @GET("acteurs")

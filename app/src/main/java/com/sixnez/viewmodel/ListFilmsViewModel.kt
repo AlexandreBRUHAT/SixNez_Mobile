@@ -76,6 +76,10 @@ class ListFilmsViewModel(req: FilmRequest) : ViewModel() {
         }
     }
 
+    fun loading(b: Boolean) {
+        _isLoading.value = b
+    }
+
     public fun getFilmById(idFilm: String) {
         var getFilm = MyApi.retrofitService.getFilm(idFilm, "Bearer "+getToken())
 

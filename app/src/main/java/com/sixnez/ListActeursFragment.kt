@@ -47,16 +47,20 @@ class ListActeursFragment (req: ActeurRequest): Fragment() {
 
         val adapter = ActeurAdapter(ActeurListener { acteur ->
             viewModel.getActeurById(acteur.id)
-            if (viewModel.acteur.value != null) {
-                val activity = activity as MainActivity?
-                activity?.changeFragment(ActeurDetailsFragment(viewModel.acteur.value as ActeurDetailledDTO))
-            }
+            viewModel.loading(true)
         })
         binding.list.adapter = adapter
 
         viewModel.acteurs.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+
+        viewModel.acteur.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val activity = activity as MainActivity?
+                activity?.changeFragment(ActeurDetailsFragment(viewModel.acteur.value as ActeurDetailledDTO))
             }
         })
 
