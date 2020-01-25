@@ -46,15 +46,25 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tv_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TitleTextView"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:text="Genre"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ev_search" />
+
         <Spinner
             android:id="@+id/sp_genre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:spinnerMode="dialog"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ev_search"
+            app:layout_constraintTop_toBottomOf="@id/tv_genre"
             android:gravity="end"
             android:textAlignment="center" />
 

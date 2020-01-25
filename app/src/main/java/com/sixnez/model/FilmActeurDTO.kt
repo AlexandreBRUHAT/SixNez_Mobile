@@ -1,4 +1,4 @@
 package com.sixnez.model
 
-class FilmActeurDTO(var id: String,
-                    var name: String)
+class FilmActeurDTO(var name: String,
+                    var id: String)

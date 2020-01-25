@@ -5,4 +5,4 @@ class ActeurDetailledDTO(var id: String,
                          var naissance: Int?,
                          var mort: Int?,
                          var metier: List<String>?,
-                         var filmsDTO: List<FilmActeurDTO>?)
+                         var filmDTOS: List<FilmActeurDTO>?)

@@ -6,8 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.sixnez.adapter.ActeurFilmAdapter
+import com.sixnez.adapter.ActeurFilmListener
+import com.sixnez.adapter.FilmAdapter
 import com.sixnez.databinding.FragmentFilmDetailsBinding
+import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.FilmDTO
 import com.sixnez.model.FilmDetailledDTO
 import com.sixnez.viewmodel.FilmDetailsViewModel
@@ -41,6 +46,21 @@ class FilmDetailsFragment (flm: FilmDetailledDTO) : Fragment() {
             tvAnnee1.text = getString(R.string.sortie)
             tvCategories1.text = getString(R.string.categories)
         }
+
+        val adapter = ActeurFilmAdapter(ActeurFilmListener { ActeurFilm ->
+            viewModel.getActeurById(ActeurFilm.id)
+        })
+
+        binding.list.adapter = adapter
+
+        adapter.submitList(film.acteurs)
+
+        viewModel.acteur.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val activity = activity as MainActivity?
+                activity?.changeFragment(ActeurDetailsFragment(viewModel.acteur.value as ActeurDetailledDTO))
+            }
+        })
 
         return binding.root
     }

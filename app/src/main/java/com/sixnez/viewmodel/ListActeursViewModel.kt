@@ -78,7 +78,7 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
         _isLoading.value = b
     }
 
-    public fun getActeurById(idActeur: String) {
+    fun getActeurById(idActeur: String) {
         var getActeur = MyApi.retrofitService.getActeur(idActeur, "Bearer "+getToken())
 
         coroutineScope.launch {

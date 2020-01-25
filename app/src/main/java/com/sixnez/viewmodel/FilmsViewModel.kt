@@ -70,6 +70,7 @@ class FilmsViewModel(
                             var jsonArray = JSONArray(response.body()!!.string())
                             val strArr = ArrayList<String>(jsonArray.length())
 
+                            strArr.add("Tous")
                             for (i in 0 until jsonArray.length()) {
                                 strArr.add(jsonArray.getString(i))
                             }
@@ -99,7 +100,8 @@ class FilmsViewModel(
     }
 
     fun onGenreSelected(genre: String) {
-       request.value?.genre = genre
+        if (genre == "Tous") request.value?.genre = null
+        else request.value?.genre = genre
     }
 
     override fun onCleared() {
