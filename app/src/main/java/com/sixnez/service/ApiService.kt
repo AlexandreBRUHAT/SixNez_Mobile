@@ -71,9 +71,9 @@ interface MyApiService {
     fun getFilm(@Path("id") id: String,
                 @Header("Authorization")token: String) : Deferred<FilmDetailledDTO>
 
-    //TODO
-    @GET("pictures")
-    fun getPictures(@Query("ids") ids: List<FilmIdDTO>,
+    //Pictures
+    @PATCH("pictures")
+    fun getPictures(@Body ids: List<FilmIdDTO>,
                     @Header("Authorization") token: String) : Deferred<List<FilmURLDTO>>
 
     //Genres

@@ -1,5 +1,7 @@
 package com.sixnez
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,11 @@ import com.sixnez.viewmodel.FilmDetailsViewModel
 import com.sixnez.viewmodelfactory.FilmDetailsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_film_details.*
 import kotlinx.android.synthetic.main.fragment_film_details.view.*
+import retrofit2.http.Url
+import android.graphics.Bitmap
+import com.squareup.picasso.Picasso
+import java.net.URL
+
 
 class FilmDetailsFragment (flm: FilmDetailledDTO, fid : FilmIdDTO) : Fragment() {
     private lateinit var binding: FragmentFilmDetailsBinding
@@ -81,6 +88,14 @@ class FilmDetailsFragment (flm: FilmDetailledDTO, fid : FilmIdDTO) : Fragment() 
             it?.let {
                 ib_fav.setImageResource(R.drawable.empty_heart)
                 Toast.makeText(this.context, "Film enlevé de vos favoris !", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.imgLoaded.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                var path = "http://"+viewModel.film.value?.imgURL
+                // image too long to load ...
+//                Picasso.get().load(path).fit().centerCrop().into(iv_film)
             }
         })
 
