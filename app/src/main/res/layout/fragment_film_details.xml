@@ -16,6 +16,13 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp">
 
+        <ImageView
+            android:id="@+id/ib_fav"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:onClick="@{() -> viewModel.fav()}"/>
 
         <ImageView
             android:id="@+id/image"
@@ -31,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.film.title}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textAppearance="@style/TitleTextView"
             android:textSize="30sp"
             android:gravity="center"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -114,7 +121,7 @@
             android:layout_height="wrap_content"
             android:text="Acteurs"
             android:layout_marginTop="10dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textAppearance="@style/TitleTextView"
             android:textSize="25sp"
             android:gravity="center"
             app:layout_constraintLeft_toLeftOf="parent"

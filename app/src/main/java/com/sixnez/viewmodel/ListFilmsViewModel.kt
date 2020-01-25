@@ -36,9 +36,11 @@ class ListFilmsViewModel(req: FilmRequest) : ViewModel() {
     val currentPage: LiveData<Int>
         get() = _currentPage
 
-    private val _nbPages = MutableLiveData<Int>()
-    val nbPages: LiveData<Int>
-        get() = _nbPages
+    private val _lastPage = MutableLiveData<Boolean>()
+    val lastPage: LiveData<Boolean>
+        get() = _lastPage
+
+    var id: String = ""
 
     private var viewModelJob = Job()
 
@@ -49,6 +51,7 @@ class ListFilmsViewModel(req: FilmRequest) : ViewModel() {
         getFilmsList()
         _currentPage.value = 0
         doneFilm()
+        _lastPage.value = false
     }
 
     private fun getFilmsList() {
@@ -67,7 +70,8 @@ class ListFilmsViewModel(req: FilmRequest) : ViewModel() {
                 var result = getFilms.await()
 
                 _films.value = result
-
+                _lastPage.value = (result.size < request.rows)
+                _currentPage.value = request.page + 1
                 _isLoading.value = false
                 Log.i("getFilms", "Succès : " +result.size +" films récupérés")
             } catch (e: Exception) {
@@ -80,7 +84,8 @@ class ListFilmsViewModel(req: FilmRequest) : ViewModel() {
         _isLoading.value = b
     }
 
-    public fun getFilmById(idFilm: String) {
+    fun getFilmById(idFilm: String) {
+        id = idFilm
         var getFilm = MyApi.retrofitService.getFilm(idFilm, "Bearer "+getToken())
 
         coroutineScope.launch {

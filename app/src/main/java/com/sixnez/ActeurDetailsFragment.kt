@@ -16,6 +16,7 @@ import com.sixnez.databinding.FragmentActeurDetailsBinding
 import com.sixnez.model.ActeurDTO
 import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.FilmDetailledDTO
+import com.sixnez.model.FilmIdDTO
 import com.sixnez.viewmodel.ActeurDetailsViewModel
 import com.sixnez.viewmodelfactory.ActeurDetailsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_acteur_details.*
@@ -66,7 +67,9 @@ class ActeurDetailsFragment (act: ActeurDetailledDTO) : Fragment() {
         viewModel.film.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val activity = activity as MainActivity?
-                activity?.changeFragment(FilmDetailsFragment(viewModel.film.value as FilmDetailledDTO))
+                activity?.changeFragment(FilmDetailsFragment(viewModel.film.value as FilmDetailledDTO,
+                    FilmIdDTO(viewModel.id)
+                ))
             }
         })
 

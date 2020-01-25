@@ -6,13 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.sixnez.viewmodel.ProfileViewModel
 
 class ProfileViewModelFactory (
-    private val application: Application,
-    private val userID: Long = 0L
+    private val application: Application
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-            return ProfileViewModel(application,userID) as T // userID
+            return ProfileViewModel(application) as T // userID
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

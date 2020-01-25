@@ -28,12 +28,15 @@ class ActeurDetailsViewModel(
     val film: LiveData<FilmDetailledDTO>
         get() = _film
 
+    var id : String = ""
+
     init {
         Log.i("ActeurDetailsViewModel", "created")
         _acteur.value = monActeur
     }
 
     fun getFilmById(idFilm: String) {
+        id = idFilm
         var getFilm = MyApi.retrofitService.getFilm(idFilm, "Bearer "+getToken())
 
         coroutineScope.launch {

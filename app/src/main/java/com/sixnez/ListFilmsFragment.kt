@@ -12,6 +12,7 @@ import com.sixnez.adapter.FilmAdapter
 import com.sixnez.adapter.FilmListener
 import com.sixnez.databinding.FragmentListFilmsBinding
 import com.sixnez.model.FilmDetailledDTO
+import com.sixnez.model.FilmIdDTO
 import com.sixnez.model.FilmRequest
 import com.sixnez.viewmodel.ListFilmsViewModel
 import com.sixnez.viewmodelfactory.ListFilmsViewModelFactory
@@ -60,7 +61,7 @@ class ListFilmsFragment (req: FilmRequest): Fragment() {
         viewModel.film.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val activity = activity as MainActivity?
-                activity?.changeFragment(FilmDetailsFragment(viewModel.film.value as FilmDetailledDTO))
+                activity?.changeFragment(FilmDetailsFragment(viewModel.film.value as FilmDetailledDTO, FilmIdDTO(viewModel.id)))
             }
         })
 
@@ -82,8 +83,11 @@ class ListFilmsFragment (req: FilmRequest): Fragment() {
                         binding.btPrecedentPage.visibility = View.VISIBLE
                     }
 
-                    if (page < viewModel.nbPages.value?:0) {
+                    if (viewModel.lastPage.value != true) {
                         binding.btNextPage.visibility = View.VISIBLE
+                    }
+                    else {
+                        binding.btNextPage.visibility = View.GONE
                     }
 
                 }

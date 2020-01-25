@@ -82,8 +82,11 @@ class ListActeursFragment (req: ActeurRequest): Fragment() {
                         binding.btPrecedentPage.visibility = View.VISIBLE
                     }
 
-                    if (page < viewModel.nbPages.value?:0) {
+                    if (viewModel.lastPage.value != true) {
                         binding.btNextPage.visibility = View.VISIBLE
+                    }
+                    else {
+                        binding.btNextPage.visibility = View.GONE
                     }
 
                 }

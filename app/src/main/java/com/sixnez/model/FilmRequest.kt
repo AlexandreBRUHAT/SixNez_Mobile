@@ -10,7 +10,7 @@ class FilmRequest() {
 
     //pages
     var page: Int = 0
-    var rows: Int = 10
+    var rows: Int = 20
 
     override fun toString(): String {
         var message = "Refine type : "+ this.query + "\n"+

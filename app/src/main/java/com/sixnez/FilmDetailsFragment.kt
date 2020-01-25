@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,15 +16,18 @@ import com.sixnez.databinding.FragmentFilmDetailsBinding
 import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.FilmDTO
 import com.sixnez.model.FilmDetailledDTO
+import com.sixnez.model.FilmIdDTO
 import com.sixnez.viewmodel.FilmDetailsViewModel
 import com.sixnez.viewmodelfactory.FilmDetailsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_film_details.*
+import kotlinx.android.synthetic.main.fragment_film_details.view.*
 
-class FilmDetailsFragment (flm: FilmDetailledDTO) : Fragment() {
+class FilmDetailsFragment (flm: FilmDetailledDTO, fid : FilmIdDTO) : Fragment() {
     private lateinit var binding: FragmentFilmDetailsBinding
     private lateinit var viewModel: FilmDetailsViewModel
     private lateinit var viewModelFactory: FilmDetailsViewModelFactory
     private var film: FilmDetailledDTO
+    private var idDTO: FilmIdDTO
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +38,7 @@ class FilmDetailsFragment (flm: FilmDetailledDTO) : Fragment() {
         binding.lifecycleOwner = this
 
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = FilmDetailsViewModelFactory(application,film)
+        val viewModelFactory = FilmDetailsViewModelFactory(application,film,idDTO)
 
         viewModel =
             ViewModelProviders.of(
@@ -45,6 +49,10 @@ class FilmDetailsFragment (flm: FilmDetailledDTO) : Fragment() {
         binding.apply {
             tvAnnee1.text = getString(R.string.sortie)
             tvCategories1.text = getString(R.string.categories)
+            if (film.fav)
+                ibFav.setImageResource(R.drawable.red_heart)
+            else
+                ibFav.setImageResource(R.drawable.empty_heart)
         }
 
         val adapter = ActeurFilmAdapter(ActeurFilmListener { ActeurFilm ->
@@ -62,10 +70,25 @@ class FilmDetailsFragment (flm: FilmDetailledDTO) : Fragment() {
             }
         })
 
+        viewModel.favAdded.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                ib_fav.setImageResource(R.drawable.red_heart)
+                Toast.makeText(this.context, "Film ajouté à vos favoris !", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.favDeleted.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                ib_fav.setImageResource(R.drawable.empty_heart)
+                Toast.makeText(this.context, "Film enlevé de vos favoris !", Toast.LENGTH_SHORT).show()
+            }
+        })
+
         return binding.root
     }
 
     init {
         this.film = flm
+        this.idDTO = fid
     }
 }

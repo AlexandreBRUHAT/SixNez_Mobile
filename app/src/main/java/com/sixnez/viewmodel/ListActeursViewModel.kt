@@ -36,9 +36,9 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
     val currentPage: LiveData<Int>
         get() = _currentPage
 
-    private val _nbPages = MutableLiveData<Int>()
-    val nbPages: LiveData<Int>
-        get() = _nbPages
+    private val _lastPage = MutableLiveData<Boolean>()
+    val lastPage: LiveData<Boolean>
+        get() = _lastPage
 
     private var viewModelJob = Job()
 
@@ -48,6 +48,8 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
         this.request = req
         getActorsList()
         _currentPage.value = 0
+        doneActeur()
+        _lastPage.value = false
     }
 
     private fun getActorsList() {
@@ -65,7 +67,8 @@ class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
                 var result = getActeurs.await()
 
                 _acteurs.value = result
-
+                _lastPage.value = (result.size < request.rows)
+                _currentPage.value = request.page + 1
                 _isLoading.value = false
                 Log.i("getActeurs", "Succès : " +result.size +" acteurs récupérés")
             } catch (e: Exception) {

@@ -8,13 +8,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.FilmDTO
+import com.sixnez.model.FilmIdDTO
 import com.sixnez.service.MyApi
 import com.sixnez.service.getToken
 import kotlinx.coroutines.*
 
 class FilmDetailsViewModel(
     application: Application,
-    private val monFilm: FilmDetailledDTO
+    private val monFilm: FilmDetailledDTO,
+    private val idDTO: FilmIdDTO
 ) : AndroidViewModel(application)
 {
     private var viewModelJob = Job()
@@ -24,9 +26,21 @@ class FilmDetailsViewModel(
     val film: LiveData<FilmDetailledDTO>
         get() = _film
 
+    private val _favAdded = MutableLiveData<Boolean>()
+    val favAdded: LiveData<Boolean>
+        get() = _favAdded
+
+    private val _favDeleted = MutableLiveData<Boolean>()
+    val favDeleted: LiveData<Boolean>
+        get() = _favDeleted
+
+    lateinit var id : FilmIdDTO
+
     init {
         Log.i("FilmDetailsViewModel", "created")
         _film.value = monFilm
+        id = idDTO
+        favDone()
     }
 
     private val _acteur = MutableLiveData<ActeurDetailledDTO>()
@@ -45,6 +59,24 @@ class FilmDetailsViewModel(
                 Log.i("Echec", e.message)
             }
         }
+    }
+
+    fun fav() {
+        Log.i("Fav", "clicked")
+        if (_film.value?.fav == true) {
+            _film.value?.fav = false
+            MyApi.retrofitService.deleteFavs( "Bearer "+getToken(), idDTO)
+            _favDeleted.value = true
+        } else {
+            _film.value?.fav = true
+            MyApi.retrofitService.setFavs( "Bearer "+getToken(), idDTO)
+            _favAdded.value = true
+        }
+     }
+
+    fun favDone() {
+        _favAdded.value = null
+        _favDeleted.value = null
     }
 
     override fun onCleared() {

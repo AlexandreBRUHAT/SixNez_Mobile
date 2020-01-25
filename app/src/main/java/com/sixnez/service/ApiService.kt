@@ -92,15 +92,17 @@ interface MyApiService {
                   @Header("Authorization")token: String) : Deferred<ActeurDetailledDTO>
 
     //Favs
-    //TODO
     @POST("favs")
-    fun setFavs()
+    fun setFavs(@Header("Authorization") token: String,
+                @Body id: FilmIdDTO) : Call<ResponseBody>
 
-    @DELETE("favs")
-    fun deleteFavs()
+    @HTTP(method = "DELETE", path = "/favs", hasBody = true)
+    fun deleteFavs(@Header("Authorization") token: String,
+                   @Body id: FilmIdDTO) : Call<ResponseBody>
 
     @GET("favs")
-    fun getFavs() : List<FilmDTO>
+    fun getFavs(@Header("Authorization") token: String,
+                @Query("page") pageNumber: Int) : Deferred<List<FilmDTO>>
 }
 
 object MyApi {
