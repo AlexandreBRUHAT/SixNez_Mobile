@@ -83,6 +83,7 @@
     <string name="metiers">Métiers</string>
     <string name="acteurs">Acteurs</string>
     <string name="films">Films</string>
+    <string name="favs">Mes films favoris :</string>
 
 
 </resources>

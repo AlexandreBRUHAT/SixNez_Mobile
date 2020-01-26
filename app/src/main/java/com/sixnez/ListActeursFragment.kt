@@ -1,7 +1,6 @@
 package com.sixnez
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.sixnez.adapter.ActeurAdapter
 import com.sixnez.adapter.ActeurListener
 import com.sixnez.databinding.FragmentListActeursBinding
@@ -22,7 +20,7 @@ class ListActeursFragment (req: ActeurRequest): Fragment() {
     private lateinit var binding: FragmentListActeursBinding
     private lateinit var viewModel: ListActeursViewModel
     private lateinit var viewModelFactory: ListActeursViewModelFactory
-    private lateinit var request: ActeurRequest
+    private var request: ActeurRequest
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,12 +49,14 @@ class ListActeursFragment (req: ActeurRequest): Fragment() {
         })
         binding.list.adapter = adapter
 
+        //Display acteurs
         viewModel.acteurs.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
         })
 
+        //Goto acteur
         viewModel.acteur.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val activity = activity as MainActivity?
@@ -64,6 +64,7 @@ class ListActeursFragment (req: ActeurRequest): Fragment() {
             }
         })
 
+        //Hide content while loading
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             it.let {
                 if(it) {

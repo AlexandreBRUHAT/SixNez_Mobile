@@ -86,8 +86,6 @@ class RegisterViewModel(
 
 
     fun onValidateAccount() {
-//        _navigateToLoginFragment.value = true
-
         uiScope.launch {
             val user = user.value ?: return@launch
 

@@ -8,17 +8,12 @@ import com.sixnez.model.FilmDTO
 import com.sixnez.model.FilmDetailledDTO
 import com.sixnez.model.FilmRequest
 import com.sixnez.service.MyApi
-import com.sixnez.service.MyApiService
 import com.sixnez.service.getToken
 import kotlinx.coroutines.*
 
 class ListFilmsViewModel(req: FilmRequest) : ViewModel() {
 
-    private lateinit var request: FilmRequest
-
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    private var request: FilmRequest
 
     private val _films = MutableLiveData<List<FilmDTO>>()
     val films: LiveData<List<FilmDTO>>

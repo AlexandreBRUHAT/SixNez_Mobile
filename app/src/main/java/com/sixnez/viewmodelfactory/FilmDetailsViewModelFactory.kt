@@ -3,7 +3,6 @@ package com.sixnez.viewmodelfactory
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sixnez.model.FilmDTO
 import com.sixnez.model.FilmDetailledDTO
 import com.sixnez.model.FilmIdDTO
 import com.sixnez.viewmodel.FilmDetailsViewModel

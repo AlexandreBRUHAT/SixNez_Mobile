@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
 
         binding.apply {
             tvTitle.text = getString(R.string.profile_title)
+            tvFavs.text = getString(R.string.favs)
         }
 
         val adapter = FilmAdapter(FilmListener { Film ->
@@ -48,12 +49,14 @@ class ProfileFragment : Fragment() {
         })
         binding.list.adapter = adapter
 
+        //Display favorite films
         viewModel.films.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
         })
 
+        //Goto film
         viewModel.film.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val activity = activity as MainActivity?

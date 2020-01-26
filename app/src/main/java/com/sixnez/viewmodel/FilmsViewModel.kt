@@ -6,18 +6,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sixnez.model.FilmRequest
-import com.sixnez.model.User
 import com.sixnez.service.MyApi
 import com.sixnez.service.getToken
 import kotlinx.coroutines.*
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 
@@ -57,7 +54,6 @@ class FilmsViewModel(
         get() = _genres
 
     fun getGenres() {
-
         MyApi.retrofitService.getGenres("Bearer "+ getToken())
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

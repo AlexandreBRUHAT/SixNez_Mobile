@@ -16,13 +16,12 @@ import com.sixnez.model.FilmIdDTO
 import com.sixnez.model.FilmRequest
 import com.sixnez.viewmodel.ListFilmsViewModel
 import com.sixnez.viewmodelfactory.ListFilmsViewModelFactory
-import kotlinx.android.synthetic.main.item_film_view.*
 
 class ListFilmsFragment (req: FilmRequest): Fragment() {
     private lateinit var binding: FragmentListFilmsBinding
     private lateinit var viewModel: ListFilmsViewModel
     private lateinit var viewModelFactory: ListFilmsViewModelFactory
-    private lateinit var request: FilmRequest
+    private var request: FilmRequest
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,12 +51,14 @@ class ListFilmsFragment (req: FilmRequest): Fragment() {
         })
         binding.list.adapter = adapter
 
+        //Display films
         viewModel.films.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }
         })
 
+        //Goto film
         viewModel.film.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val activity = activity as MainActivity?
@@ -65,6 +66,7 @@ class ListFilmsFragment (req: FilmRequest): Fragment() {
             }
         })
 
+        //Hide content while loading
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             it.let {
                 if(it) {

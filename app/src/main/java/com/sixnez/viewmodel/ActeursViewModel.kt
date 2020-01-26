@@ -13,9 +13,6 @@ class ActeursViewModel(
     application: Application
 ) : AndroidViewModel(application)
 {
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     private val _request = MutableLiveData<ActeurRequest>()
     val request: LiveData<ActeurRequest>
         get() = _request
@@ -52,6 +49,5 @@ class ActeursViewModel(
     override fun onCleared() {
         super.onCleared()
         Log.i("ActeursViewModel", "destroyed")
-        viewModelJob.cancel()
     }
 }

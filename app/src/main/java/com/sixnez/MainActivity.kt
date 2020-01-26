@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onStart()
     }
 
+    //Navigate through fragments
     fun changeFragment(frag: Fragment, id : Int = 0) {
         var fragment = frag
 

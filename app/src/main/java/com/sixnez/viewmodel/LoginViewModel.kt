@@ -10,15 +10,10 @@ import com.sixnez.service.MyApi
 import kotlinx.coroutines.*
 import java.lang.Exception
 import java.security.MessageDigest
-import android.R.string
 import okhttp3.ResponseBody
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import com.sixnez.service.MyApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import com.sixnez.service.setToken
 
 
 class LoginViewModel(
@@ -121,7 +116,6 @@ class LoginViewModel(
         })
     }
 
-    // TODO utile ?
     fun encode(type:String, input: String): String {
         val HEX_CHARS = "0123456789ABCDEF"
         val bytes = MessageDigest

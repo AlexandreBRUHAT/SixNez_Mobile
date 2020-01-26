@@ -7,11 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sixnez.model.FilmDTO
 import com.sixnez.model.FilmDetailledDTO
-import com.sixnez.model.User
 import com.sixnez.service.MyApi
 import com.sixnez.service.getToken
 import kotlinx.coroutines.*
-import java.security.MessageDigest
 
 
 class ProfileViewModel(

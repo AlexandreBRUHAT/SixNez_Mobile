@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sixnez.model.ActeurDetailledDTO
-import com.sixnez.model.FilmDTO
 import com.sixnez.model.FilmIdDTO
 import com.sixnez.service.MyApi
 import com.sixnez.service.getToken
@@ -92,6 +91,7 @@ class FilmDetailsViewModel(
         }
     }
 
+    //Click on heart, fav or unfav film
     fun fav() {
         Log.i("Fav", "clicked")
         if (_film.value?.fav == true) {

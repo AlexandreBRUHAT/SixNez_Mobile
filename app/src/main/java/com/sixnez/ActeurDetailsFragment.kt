@@ -8,18 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.sixnez.adapter.ActeurFilmAdapter
-import com.sixnez.adapter.ActeurFilmListener
 import com.sixnez.adapter.FilmActeurAdapter
 import com.sixnez.adapter.FilmActeurListener
 import com.sixnez.databinding.FragmentActeurDetailsBinding
-import com.sixnez.model.ActeurDTO
 import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.FilmDetailledDTO
 import com.sixnez.model.FilmIdDTO
 import com.sixnez.viewmodel.ActeurDetailsViewModel
 import com.sixnez.viewmodelfactory.ActeurDetailsViewModelFactory
-import kotlinx.android.synthetic.main.fragment_acteur_details.*
 
 class ActeurDetailsFragment (act: ActeurDetailledDTO) : Fragment() {
     private lateinit var binding: FragmentActeurDetailsBinding
@@ -47,6 +43,7 @@ class ActeurDetailsFragment (act: ActeurDetailledDTO) : Fragment() {
         binding.apply {
             tvMort1.text = getString(R.string.mort)
             tvNaissance1.text = getString(R.string.naissance)
+            tvFilms.text =  getString(R.string.films)
             layMort.visibility = View.VISIBLE
             if (acteur.mort == null) {
                 layMort.visibility = View.GONE
@@ -64,6 +61,7 @@ class ActeurDetailsFragment (act: ActeurDetailledDTO) : Fragment() {
 
         adapter.submitList(acteur.filmDTOS)
 
+        //Goto film
         viewModel.film.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val activity = activity as MainActivity?

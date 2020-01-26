@@ -3,7 +3,6 @@ package com.sixnez.viewmodelfactory
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sixnez.model.ActeurDTO
 import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.viewmodel.ActeurDetailsViewModel
 

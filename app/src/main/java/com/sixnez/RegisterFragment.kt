@@ -42,7 +42,7 @@ class RegisterFragment : Fragment() {
             btRegister.text = getString(R.string.register_button)
         }
 
-        //Login
+        //Goto login
         viewModel.navigateToLoginFragment.observe(this, Observer { bool ->
             bool?.let {
                 if (bool) {

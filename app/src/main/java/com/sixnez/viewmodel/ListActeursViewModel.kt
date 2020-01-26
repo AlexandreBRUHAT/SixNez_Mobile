@@ -8,17 +8,12 @@ import com.sixnez.model.ActeurDTO
 import com.sixnez.model.ActeurDetailledDTO
 import com.sixnez.model.ActeurRequest
 import com.sixnez.service.MyApi
-import com.sixnez.service.MyApiService
 import com.sixnez.service.getToken
 import kotlinx.coroutines.*
 
 class ListActeursViewModel(req: ActeurRequest) : ViewModel() {
 
-    private lateinit var request: ActeurRequest
-
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    private var request: ActeurRequest
 
     private val _acteurs = MutableLiveData<List<ActeurDTO>>()
     val acteurs: LiveData<List<ActeurDTO>>

@@ -1,7 +1,6 @@
 package com.sixnez
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +55,7 @@ class LoginFragment : Fragment() {
             }
         })
 
-        //Register
+        //Goto register
         viewModel.navigateToRegister.observe(this, Observer { bool ->
             bool?.let {
                 if (bool) {

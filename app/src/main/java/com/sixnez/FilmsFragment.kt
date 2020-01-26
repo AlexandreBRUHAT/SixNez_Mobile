@@ -11,13 +11,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.sixnez.databinding.FragmentFilmsBinding
-import com.sixnez.databinding.FragmentLoginBinding
 import com.sixnez.viewmodel.FilmsViewModel
-import com.sixnez.viewmodel.LoginViewModel
 import com.sixnez.viewmodelfactory.FilmsViewModelFactory
-import com.sixnez.viewmodelfactory.LoginViewModelFactory
 import kotlinx.android.synthetic.main.fragment_films.*
 
 class FilmsFragment() : Fragment() {
@@ -45,17 +41,7 @@ class FilmsFragment() : Fragment() {
         binding.apply {
             tvTitle.text = getString(R.string.films_title)
             btSearch.text = getString(R.string.search_button)
-//            spGenre.adapter = ArrayAdapter<String>(application,android.R.layout.simple_list_item_1, genres)
-//            spGenre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-//                override fun onNothingSelected(parent: AdapterView<*>?) {
-//                    //
-//                }
-//
-//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                    viewModel?.onGenreSelected(genres.get(position))
-//                }
-//
-//            }
+            tvGenre.text = getString(R.string.gender)
         }
 
         //Search

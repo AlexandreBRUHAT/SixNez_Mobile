@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sixnez.model.ActeurDTO
 import com.sixnez.model.FilmDetailledDTO
 import com.sixnez.service.MyApi
 import com.sixnez.service.getToken
